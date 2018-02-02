@@ -1,4 +1,4 @@
-package log
+package logger
 
 import (
 	"fmt"
@@ -8,8 +8,16 @@ import (
 )
 
 const (
-	err = iota
+	trace = iota
+	input
+	verbose
+	prompt
+	debug
 	info
+	data
+	help
+	warn
+	err
 )
 
 type Logger struct {
