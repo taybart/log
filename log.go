@@ -7,39 +7,64 @@ import (
 	. "github.com/logrusorgru/aurora"
 )
 
+type Level int
+
 const (
-	trace = iota
-	input
-	verbose
-	prompt
-	debug
-	info
-	data
-	help
-	warn
-	err
+	LEVELTRACE Level = iota
+	LEVELVERBOSE
+	LEVELDEBUG
+	LEVELINFO
+	LEVELWARN
+	LEVELERROR
 )
 
 type Logger struct {
-	level   int
+	level   Level
 	timeFmt string
 }
 
-func NewLogger() Logger {
-	level := err
+func NewLogger(l Level) Logger {
 	timeFmt := "2006-01-02 15:04:05"
-	return Logger{level, timeFmt}
+	return Logger{l, timeFmt}
+}
+
+func (l Logger) Trace(format string, v ...interface{}) {
+	if l.level <= LEVELTRACE {
+		f := fmt.Sprintf(format, v...)
+		fmt.Println(time.Now().Format(l.timeFmt), Gray("[TRACE]"), f)
+	}
+}
+
+func (l Logger) Verbose(format string, v ...interface{}) {
+	if l.level <= LEVELVERBOSE {
+		f := fmt.Sprintf(format, v...)
+		fmt.Println(time.Now().Format(l.timeFmt), Magenta("[VERBOSE]"), f)
+	}
+}
+
+func (l Logger) Debug(format string, v ...interface{}) {
+	if l.level <= LEVELDEBUG {
+		f := fmt.Sprintf(format, v...)
+		fmt.Println(time.Now().Format(l.timeFmt), Blue("[DEBUG]"), f)
+	}
 }
 
 func (l Logger) Info(format string, v ...interface{}) {
-	if l.level <= info {
+	if l.level <= LEVELINFO {
 		f := fmt.Sprintf(format, v...)
 		fmt.Println(time.Now().Format(l.timeFmt), Green("[INFO]"), f)
 	}
 }
 
+func (l Logger) Warn(format string, v ...interface{}) {
+	if l.level <= LEVELWARN {
+		f := fmt.Sprintf(format, v...)
+		fmt.Println(time.Now().Format(l.timeFmt), Brown("[WARN]"), f)
+	}
+}
+
 func (l Logger) Error(format string, v ...interface{}) {
-	if l.level <= err {
+	if l.level <= LEVELERROR {
 		f := fmt.Sprintf(format, v...)
 		fmt.Println(time.Now().Format(l.timeFmt), Red("[ERROR]"), f)
 	}
