@@ -14,6 +14,7 @@ const (
 	LEVELVERBOSE
 	LEVELDEBUG
 	LEVELINFO
+	LEVELTEST
 	LEVELWARN
 	LEVELERROR
 )
@@ -53,6 +54,13 @@ func (l Logger) Info(format string, v ...interface{}) {
 	if l.level <= LEVELINFO {
 		f := fmt.Sprintf(format, v...)
 		fmt.Println(time.Now().Format(l.timeFmt), Green("[INFO]"), f)
+	}
+}
+
+func (l Logger) Test(format string, v ...interface{}) {
+	if l.level <= LEVELTEST {
+		f := fmt.Sprintf(format, v...)
+		fmt.Println(time.Now().Format(l.timeFmt), Green("[TEST]"), f)
 	}
 }
 

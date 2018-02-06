@@ -23,6 +23,9 @@ func TestDebug(t *testing.T) {
 func TestInfo(t *testing.T) {
 	toutput(t, LEVELINFO, Green("[INFO]").String())
 }
+func TestTest(t *testing.T) {
+	toutput(t, LEVELTEST, Green("[TEST]").String())
+}
 func TestWarn(t *testing.T) {
 	toutput(t, LEVELWARN, Brown("[WARN]").String())
 }
@@ -53,6 +56,8 @@ func toutput(t *testing.T, level Level, label string) {
 		l.Debug("test")
 	case LEVELINFO:
 		l.Info("test")
+	case LEVELTEST:
+		l.Test("test")
 	case LEVELWARN:
 		l.Warn("test")
 	case LEVELERROR:
