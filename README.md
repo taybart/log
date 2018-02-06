@@ -1,5 +1,7 @@
 # Log
 
+[![Build Status](https://travis-ci.org/pmpbar/log.svg)](https://travis-ci.org/pmpbar/log)
+
 ```go
 import "github.com/pmpbar/log"
 
