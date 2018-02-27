@@ -5,7 +5,7 @@
 ```go
 import "github.com/pmpbar/log"
 
-var l Logger
+var l logger.Logger
 
 // All levels
 func main() {
