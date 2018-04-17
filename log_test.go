@@ -7,30 +7,28 @@ import (
 	"strings"
 	"testing"
 	"time"
-
-	. "github.com/logrusorgru/aurora"
 )
 
 func TestTrace(t *testing.T) {
-	toutput(t, LEVELTRACE, Gray("[TRACE]").String())
+	toutput(t, LEVELTRACE, "\033[37m[TRACE]\033[0m")
 }
 func TestVerbose(t *testing.T) {
-	toutput(t, LEVELVERBOSE, Magenta("[VERBOSE]").String())
+	toutput(t, LEVELVERBOSE, "\033[35m[VERBOSE]\033[0m")
 }
 func TestDebug(t *testing.T) {
-	toutput(t, LEVELDEBUG, Blue("[DEBUG]").String())
+	toutput(t, LEVELDEBUG, "\033[34m[DEBUG]\033[0m")
 }
 func TestInfo(t *testing.T) {
-	toutput(t, LEVELINFO, Green("[INFO]").String())
+	toutput(t, LEVELINFO, "\033[32m[INFO]\033[0m")
 }
 func TestTest(t *testing.T) {
-	toutput(t, LEVELTEST, Green("[TEST]").String())
+	toutput(t, LEVELTEST, "\033[32m[TEST]\033[0m")
 }
 func TestWarn(t *testing.T) {
-	toutput(t, LEVELWARN, Brown("[WARN]").String())
+	toutput(t, LEVELWARN, "\033[33m[WARN]\033[0m")
 }
 func TestError(t *testing.T) {
-	toutput(t, LEVELERROR, Red("[ERROR]").String())
+	toutput(t, LEVELERROR, "\033[31m[ERROR]\033[0m")
 }
 
 func toutput(t *testing.T, level Level, label string) {
