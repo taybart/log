@@ -3,7 +3,6 @@ package logger
 import (
 	"fmt"
 	"time"
-	// . "github.com/logrusorgru/aurora"
 )
 
 type Level int
