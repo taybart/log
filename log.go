@@ -48,6 +48,12 @@ func (l Logger) Debug(format string, v ...interface{}) {
 	}
 }
 
+func (l Logger) Infoln(v ...interface{}) {
+	if l.level <= LEVELINFO {
+		f := fmt.Sprintf("%v", v...)
+		fmt.Println(time.Now().Format(l.timeFmt), "\033[32m[INFO]\033[0m", f)
+	}
+}
 func (l Logger) Info(format string, v ...interface{}) {
 	if l.level <= LEVELINFO {
 		f := fmt.Sprintf(format, v...)
@@ -72,6 +78,13 @@ func (l Logger) Warn(format string, v ...interface{}) {
 func (l Logger) Error(format string, v ...interface{}) {
 	if l.level <= LEVELERROR {
 		f := fmt.Sprintf(format, v...)
+		fmt.Println(time.Now().Format(l.timeFmt), "\033[31m[ERROR]\033[0m", f)
+	}
+}
+
+func (l Logger) Errorln(v ...interface{}) {
+	if l.level <= LEVELERROR {
+		f := fmt.Sprintf("%v", v...)
 		fmt.Println(time.Now().Format(l.timeFmt), "\033[31m[ERROR]\033[0m", f)
 	}
 }
