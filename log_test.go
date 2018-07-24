@@ -35,7 +35,7 @@ func toutput(t *testing.T, level Level, label string) {
 	stdo := os.Stdout
 	r, w, _ := os.Pipe()
 	os.Stdout = w
-	l := NewLog(level)
+	l := SetLevel(level)
 	oc := make(chan string)
 	go func() {
 		var buf bytes.Buffer

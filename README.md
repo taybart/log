@@ -5,17 +5,16 @@
 ```go
 import "github.com/pmpbar/log"
 
-var l logger.Logger
 
 // All levels
 func main() {
-  l = logger.NewLogger(logger.LEVELTRACE)
-  l.Trace("test")
-  l.Verbose("test")
-  l.Debug("test")
-  l.Info("test")
-  l.Warn("test")
-  l.Error("test")
+  l = log.SetLevel(log.LEVELTRACE)
+  log.Trace("test")
+  log.Verbose("test")
+  log.Debug("test")
+  log.Info("test")
+  log.Warn("test")
+  log.Error("test")
 }
 ```
 
