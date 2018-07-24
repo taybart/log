@@ -35,7 +35,7 @@ func toutput(t *testing.T, level Level, label string) {
 	stdo := os.Stdout
 	r, w, _ := os.Pipe()
 	os.Stdout = w
-	l := SetLevel(level)
+	SetLevel(level)
 	oc := make(chan string)
 	go func() {
 		var buf bytes.Buffer
@@ -47,19 +47,19 @@ func toutput(t *testing.T, level Level, label string) {
 	}()
 	switch level {
 	case LEVELTRACE:
-		l.Trace("test")
+		Trace("test")
 	case LEVELVERBOSE:
-		l.Verbose("test")
+		Verbose("test")
 	case LEVELDEBUG:
-		l.Debug("test")
+		Debug("test")
 	case LEVELINFO:
-		l.Info("test")
+		Info("test")
 	case LEVELTEST:
-		l.Test("test")
+		Test("test")
 	case LEVELWARN:
-		l.Warn("test")
+		Warn("test")
 	case LEVELERROR:
-		l.Error("test")
+		Error("test")
 	}
 	err := w.Close()
 	if err != nil {
