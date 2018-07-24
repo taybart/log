@@ -1,9 +1,9 @@
 # Log
 
-[![Build Status](https://travis-ci.org/pmpbar/log.svg)](https://travis-ci.org/pmpbar/log)
+[![Build Status](https://travis-ci.org/taybartski/log.svg)](https://travis-ci.org/taybartski/log)
 
 ```go
-import "github.com/pmpbar/log"
+import "github.com/taybartski/log"
 
 
 // All levels
