@@ -9,6 +9,7 @@ import "github.com/taybartski/log"
 // All levels
 func main() {
   log.SetLevel(log.LEVELTRACE)
+  log.SetFmt("2006-01-02 15:04:05") // Default time format
   log.Trace("test")
   log.Verbose("test")
   log.Debug("test")
