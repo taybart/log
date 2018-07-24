@@ -8,7 +8,7 @@ import "github.com/taybartski/log"
 
 // All levels
 func main() {
-  l = log.SetLevel(log.LEVELTRACE)
+  log.SetLevel(log.LEVELTRACE)
   log.Trace("test")
   log.Verbose("test")
   log.Debug("test")
