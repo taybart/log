@@ -42,6 +42,13 @@ func Verbose(format string, v ...interface{}) {
 	}
 }
 
+func Debugln(v ...interface{}) {
+	if level <= LEVELDEBUG {
+		f := fmt.Sprintf("%v", v...)
+		fmt.Println(time.Now().Format(timeFmt), "\033[34m[DEBUG]\033[0m", f)
+	}
+}
+
 func Debug(format string, v ...interface{}) {
 	if level <= LEVELDEBUG {
 		f := fmt.Sprintf(format, v...)
@@ -76,16 +83,16 @@ func Warn(format string, v ...interface{}) {
 	}
 }
 
-func Error(format string, v ...interface{}) {
+func Errorln(v ...interface{}) {
 	if level <= LEVELERROR {
-		f := fmt.Sprintf(format, v...)
+		f := fmt.Sprintf("%v", v...)
 		fmt.Println(time.Now().Format(timeFmt), "\033[31m[ERROR]\033[0m", f)
 	}
 }
 
-func Errorln(v ...interface{}) {
+func Error(format string, v ...interface{}) {
 	if level <= LEVELERROR {
-		f := fmt.Sprintf("%v", v...)
+		f := fmt.Sprintf(format, v...)
 		fmt.Println(time.Now().Format(timeFmt), "\033[31m[ERROR]\033[0m", f)
 	}
 }
