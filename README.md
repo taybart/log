@@ -16,6 +16,8 @@ Levels can be:
 ### Usage
 
 ```go
+package main
+
 import "github.com/taybartski/log"
 
 
