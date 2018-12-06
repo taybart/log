@@ -10,25 +10,25 @@ import (
 )
 
 func TestTrace(t *testing.T) {
-	toutput(t, LEVELTRACE, "\033[37m[TRACE]\033[0m")
+	toutput(t, TRACE, "\033[37m[TRACE]\033[0m")
 }
 func TestVerbose(t *testing.T) {
-	toutput(t, LEVELVERBOSE, "\033[35m[VERBOSE]\033[0m")
+	toutput(t, VERBOSE, "\033[35m[VERBOSE]\033[0m")
 }
 func TestDebug(t *testing.T) {
-	toutput(t, LEVELDEBUG, "\033[34m[DEBUG]\033[0m")
+	toutput(t, DEBUG, "\033[34m[DEBUG]\033[0m")
 }
 func TestInfo(t *testing.T) {
-	toutput(t, LEVELINFO, "\033[32m[INFO]\033[0m")
+	toutput(t, INFO, "\033[32m[INFO]\033[0m")
 }
 func TestTest(t *testing.T) {
-	toutput(t, LEVELTEST, "\033[32m[TEST]\033[0m")
+	toutput(t, TEST, "\033[32m[TEST]\033[0m")
 }
 func TestWarn(t *testing.T) {
-	toutput(t, LEVELWARN, "\033[33m[WARN]\033[0m")
+	toutput(t, WARN, "\033[33m[WARN]\033[0m")
 }
 func TestError(t *testing.T) {
-	toutput(t, LEVELERROR, "\033[31m[ERROR]\033[0m")
+	toutput(t, ERROR, "\033[31m[ERROR]\033[0m")
 }
 
 func toutput(t *testing.T, level Level, label string) {
@@ -46,19 +46,19 @@ func toutput(t *testing.T, level Level, label string) {
 		oc <- buf.String()
 	}()
 	switch level {
-	case LEVELTRACE:
+	case TRACE:
 		Trace("test")
-	case LEVELVERBOSE:
+	case VERBOSE:
 		Verbose("test")
-	case LEVELDEBUG:
+	case DEBUG:
 		Debug("test")
-	case LEVELINFO:
+	case INFO:
 		Info("test")
-	case LEVELTEST:
+	case TEST:
 		Test("test")
-	case LEVELWARN:
+	case WARN:
 		Warn("test")
-	case LEVELERROR:
+	case ERROR:
 		Error("test")
 	}
 	err := w.Close()
