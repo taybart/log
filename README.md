@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/taybartski/log.svg)](https://travis-ci.org/taybartski/log)
 
+Level logging to stdout.
+
 ### Levels
 Levels can be:
 1)	LEVELTRACE
@@ -12,9 +14,6 @@ Levels can be:
 1)	LEVELERROR
 
 ### Usage
-
-Note: Error level does not panic on its own. This is ment to give the user process control.
-
 
 ```go
 import "github.com/taybartski/log"
@@ -36,5 +35,3 @@ func main() {
   log.Error("test %s", myVar)
 }
 ```
-
-Why do some levels have "ln"? Because I said so.
