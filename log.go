@@ -3,6 +3,7 @@ package log
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -67,7 +68,8 @@ func Verbose(format string, v ...interface{}) {
 // Debugln print var with no format
 func Debugln(v ...interface{}) {
 	if level <= DEBUG {
-		f := fmt.Sprintf("%v", v...)
+		f := fmt.Sprintf("%v", v)
+		f = strings.Trim(f, "[]")
 		fmt.Println(time.Now().Format(timeFmt), "\033[34m[DEBUG]\033[0m", f)
 	}
 }
@@ -83,7 +85,8 @@ func Debug(format string, v ...interface{}) {
 // Infoln info with no format
 func Infoln(v ...interface{}) {
 	if level <= INFO {
-		f := fmt.Sprintf("%v", v...)
+		f := fmt.Sprintf("%v", v)
+		f = strings.Trim(f, "[]")
 		fmt.Println(time.Now().Format(timeFmt), "\033[32m[INFO]\033[0m", f)
 	}
 }
@@ -115,7 +118,8 @@ func Warn(format string, v ...interface{}) {
 // Errorln error var with no format
 func Errorln(v ...interface{}) {
 	if level <= ERROR {
-		f := fmt.Sprintf("%v", v...)
+		f := fmt.Sprintf("%v", v)
+		f = strings.Trim(f, "[]")
 		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), "\033[31m[ERROR]\033[0m", f)
 		if PanicOnErrors {
 			panic(err)
