@@ -21,18 +21,33 @@ import "github.com/taybartski/log"
 
 // All levels
 func main() {
-  myVar := "test"
-  thingy := "thingy"
   log.SetLevel(log.TRACE)
-  log.SetFmt("2006-01-02 15:04:05") // Default time format
-  log.Trace("test %s", myVar)
-  log.Verbose("test %s", myVar)
-  log.Debugln(myVar)
-  log.Debug("test %s", myVar)
-  log.Infoln(myVar, thingy)
-  log.Info("test %s", myVar)
-  log.Warn("test %s", myVar)
-  log.Errorln(myVar)
-  log.Error("test %s", myVar)
+  log.SetTimeFmt("2006-01-02 15:04:05") // Default time format
+
+  log.SetOutput("./logifle.log") // defaults to stdout
+
+  log.PanicOnErrors = false // defaults to false
+  log.UseColors = true // defaults to true
+
+  amount := 1
+  thingy := "thingy"
+
+  log.Traceln(amount, thingy)
+  log.Trace("test %s", thingy)
+
+  log.Verboseln(amount, thingy)
+  log.Verbose("test %s", thingy)
+
+  log.Debugln(amount)
+  log.Debug("test %s", thingy)
+
+  log.Infoln(amount, thingy)
+  log.Info("test %s", thingy)
+
+  log.Warnln(amount, thingy)
+  log.Warn("test %s", thingy)
+
+  log.Errorln(amount, thingy)
+  log.Error("test %s", thingy)
 }
 ```

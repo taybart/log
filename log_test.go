@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"io"
 	"os"
-	"strings"
+	// "strings"
 	"testing"
 	"time"
 )
@@ -68,7 +68,7 @@ func toutput(t *testing.T, level Level, label string) {
 	os.Stdout = stdo
 	output := <-oc
 	str := time.Now().Format("2006-01-02 15:04:05") + " " + label + " test\n"
-	if strings.Compare(str, output) != 0 {
+	if bytes.Equal([]byte(str), []byte(output)) {
 		t.Error(str, output)
 	}
 }
