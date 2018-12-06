@@ -6,12 +6,12 @@ Level logging to stdout.
 
 ### Levels
 Levels can be:
-1)	LEVELTRACE
-1)	LEVELVERBOSE
-1)	LEVELDEBUG
-1)	LEVELINFO
-1)	LEVELWARN
-1)	LEVELERROR
+1)	TRACE
+1)	VERBOSE
+1)	DEBUG
+1)	INFO
+1)	WARN
+1)	ERROR
 
 ### Usage
 
@@ -22,7 +22,7 @@ import "github.com/taybartski/log"
 // All levels
 func main() {
   myVar := "test"
-  log.SetLevel(log.LEVELTRACE)
+  log.SetLevel(log.TRACE)
   log.SetFmt("2006-01-02 15:04:05") // Default time format
   log.Trace("test %s", myVar)
   log.Verbose("test %s", myVar)
