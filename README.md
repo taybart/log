@@ -1,6 +1,6 @@
 # Log
 
-[![Build Status](https://travis-ci.org/taybartski/log.svg)](https://travis-ci.org/taybartski/log)
+[![Build Status](https://travis-ci.org/taybart/log.svg)](https://travis-ci.org/taybart/log)
 
 Level logging to stdout.
 
@@ -18,7 +18,7 @@ Levels can be:
 ```go
 package main
 
-import "github.com/taybartski/log"
+import "github.com/taybart/log"
 
 
 // All levels
