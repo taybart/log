@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/taybart/log.svg)](https://travis-ci.org/taybart/log)
 
-Level logging to stdout.
+Simple level logging
 
 ### Levels
 Levels can be:
