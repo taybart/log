@@ -27,7 +27,7 @@ const (
 	ERROR
 )
 
-// Colors
+/* // Colors
 const (
 	// Color escape
 	ce     = "\033["
@@ -39,6 +39,20 @@ const (
 	red    = ce + "31m"
 	// Return to default
 	rtd = ce + "0m"
+) */
+
+// Colors
+const (
+	// Color escape
+	ce     = "\033["
+	Gray   = ce + "37m"
+	Purple = ce + "35m"
+	Blue   = ce + "34m"
+	Yellow = ce + "33m"
+	Green  = ce + "32m"
+	Red    = ce + "31m"
+	// Return to default
+	Rtd = ce + "0m"
 )
 
 var level = INFO
@@ -77,7 +91,7 @@ func Traceln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		l := getlabel(gray, "[TRACE]")
+		l := getlabel(Gray, "[TRACE]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -87,7 +101,7 @@ func Traceln(v ...interface{}) {
 func Trace(format string, v ...interface{}) {
 	if level <= TRACE {
 		f := fmt.Sprintf(format, v...)
-		l := getlabel(gray, "[TRACE]")
+		l := getlabel(Gray, "[TRACE]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -98,7 +112,7 @@ func Verboseln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		l := getlabel(purple, "[VERBOSE]")
+		l := getlabel(Purple, "[VERBOSE]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -108,7 +122,7 @@ func Verboseln(v ...interface{}) {
 func Verbose(format string, v ...interface{}) {
 	if level <= VERBOSE {
 		f := fmt.Sprintf(format, v...)
-		l := getlabel(purple, "[VERBOSE]")
+		l := getlabel(Purple, "[VERBOSE]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -119,7 +133,7 @@ func Debugln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		l := getlabel(blue, "[DEBUG]")
+		l := getlabel(Blue, "[DEBUG]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -129,7 +143,7 @@ func Debugln(v ...interface{}) {
 func Debug(format string, v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf(format, v...)
-		l := getlabel(blue, "[DEBUG]")
+		l := getlabel(Blue, "[DEBUG]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -140,7 +154,7 @@ func Infoln(v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		l := getlabel(green, "[INFO]")
+		l := getlabel(Green, "[INFO]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -150,7 +164,7 @@ func Infoln(v ...interface{}) {
 func Info(format string, v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf(format, v...)
-		l := getlabel(green, "[INFO]")
+		l := getlabel(Green, "[INFO]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -161,7 +175,7 @@ func Testln(v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		l := getlabel(green, "[TEST]")
+		l := getlabel(Green, "[TEST]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -171,7 +185,7 @@ func Testln(v ...interface{}) {
 func Test(format string, v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf(format, v...)
-		l := getlabel(green, "[TEST]")
+		l := getlabel(Green, "[TEST]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -182,7 +196,7 @@ func Warnln(v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		l := getlabel(yellow, "[WARN]")
+		l := getlabel(Yellow, "[WARN]")
 		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		if PanicOnErrors {
 			panic(err)
@@ -195,7 +209,7 @@ func Warnln(v ...interface{}) {
 func Warn(format string, v ...interface{}) {
 	if level <= WARN {
 		f := fmt.Sprintf(format, v...)
-		l := getlabel(yellow, "[WARN]")
+		l := getlabel(Yellow, "[WARN]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -206,7 +220,7 @@ func Errorln(v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		l := getlabel(red, "[ERROR]")
+		l := getlabel(Red, "[ERROR]")
 		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		if PanicOnErrors {
 			panic(err)
@@ -219,7 +233,7 @@ func Errorln(v ...interface{}) {
 func Error(format string, v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf(format, v...)
-		l := getlabel(red, "[ERROR]")
+		l := getlabel(Red, "[ERROR]")
 		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		if PanicOnErrors {
 			panic(err)
@@ -230,7 +244,7 @@ func Error(format string, v ...interface{}) {
 
 func getlabel(color, label string) string {
 	if UseColors {
-		return color + label + rtd
+		return color + label + Rtd
 	}
 	return label
 }
