@@ -88,7 +88,7 @@ func Trace(format string, v ...interface{}) {
 	if level <= TRACE {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(gray, "[TRACE]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
 }
@@ -109,7 +109,7 @@ func Verbose(format string, v ...interface{}) {
 	if level <= VERBOSE {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(purple, "[VERBOSE]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
 }
@@ -130,7 +130,7 @@ func Debug(format string, v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(blue, "[DEBUG]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
 }
@@ -151,6 +151,17 @@ func Info(format string, v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(green, "[INFO]")
+		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
+		log(o)
+	}
+}
+
+// Testln test with no format
+func Testln(v ...interface{}) {
+	if level <= TEST {
+		f := fmt.Sprintf("%v", v)
+		f = strings.Trim(f, "[]")
+		l := getlabel(green, "[TEST]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
@@ -161,7 +172,7 @@ func Test(format string, v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(green, "[TEST]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
 }
@@ -185,7 +196,7 @@ func Warn(format string, v ...interface{}) {
 	if level <= WARN {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(yellow, "[WARN]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
 }
@@ -209,7 +220,7 @@ func Error(format string, v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(red, "[ERROR]")
-		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		if PanicOnErrors {
 			panic(err)
 		}
