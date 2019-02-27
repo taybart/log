@@ -25,6 +25,8 @@ const (
 	WARN
 	// ERROR level
 	ERROR
+	// FATAL level
+	FATAL
 )
 
 /* // Colors
@@ -234,6 +236,33 @@ func Error(format string, v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Red, "[ERROR]")
+		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
+		if PanicOnErrors {
+			panic(err)
+		}
+		log(err)
+	}
+}
+
+// Fatalln error var with no format
+func Fatalln(v ...interface{}) {
+	if level <= FATAL {
+		f := fmt.Sprintf("%v", v)
+		f = strings.Trim(f, "[]")
+		l := getlabel(Red, "[FATAL]")
+		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		if PanicOnErrors {
+			panic(err)
+		}
+		log(err)
+	}
+}
+
+// Fatal logging
+func Fatal(format string, v ...interface{}) {
+	if level <= FATAL {
+		f := fmt.Sprintf(format, v...)
+		l := getlabel(Red, "[FATAL]")
 		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		if PanicOnErrors {
 			panic(err)

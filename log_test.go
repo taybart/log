@@ -30,6 +30,9 @@ func TestWarn(t *testing.T) {
 func TestError(t *testing.T) {
 	toutput(t, ERROR, "\033[31m[ERROR]\033[0m")
 }
+func TestFatal(t *testing.T) {
+	toutput(t, FATAL, "\033[31m[FATAL]\033[0m")
+}
 
 func toutput(t *testing.T, level Level, label string) {
 	stdo := os.Stdout
@@ -47,19 +50,21 @@ func toutput(t *testing.T, level Level, label string) {
 	}()
 	switch level {
 	case TRACE:
-		Trace("test")
+		Traceln("test")
 	case VERBOSE:
-		Verbose("test")
+		Verboseln("test")
 	case DEBUG:
-		Debug("test")
+		Debugln("test")
 	case INFO:
-		Info("test")
+		Infoln("test")
 	case TEST:
-		Test("test")
+		Testln("test")
 	case WARN:
-		Warn("test")
+		Warnln("test")
 	case ERROR:
-		Error("test")
+		Errorln("test")
+	case FATAL:
+		Fatalln("test")
 	}
 	err := w.Close()
 	if err != nil {
