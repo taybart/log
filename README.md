@@ -12,6 +12,7 @@ Levels can be:
 1)	INFO
 1)	WARN
 1)	ERROR
+1)	FATAL
 
 ### Usage
 
@@ -28,8 +29,7 @@ func main() {
 
   log.SetOutput("./logifle.log") // defaults to stdout
 
-  log.PanicOnErrors = false // defaults to false
-  log.UseColors = true // defaults to true
+  log.UseColors(true) // defaults to true
 
   amount := 1
   thingy := "thingy"

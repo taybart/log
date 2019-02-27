@@ -61,11 +61,12 @@ var level = INFO
 var timeFmt = "2006-01-02 15:04:05"
 var output = os.Stdout
 
-// PanicOnErrors panic with error instead of logging
-var PanicOnErrors = false
-
 // UseColors allow console coloring
-var UseColors = true
+var useColors = true
+
+// UseColors used to set colors
+func UseColors(use bool) {
+}
 
 // SetLevel used to set logging level
 func SetLevel(l Level) {
@@ -199,11 +200,8 @@ func Warnln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		l := getlabel(Yellow, "[WARN]")
-		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		if PanicOnErrors {
-			panic(err)
-		}
-		log(err)
+		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		log(o)
 	}
 }
 
@@ -224,9 +222,6 @@ func Errorln(v ...interface{}) {
 		f = strings.Trim(f, "[]")
 		l := getlabel(Red, "[ERROR]")
 		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		if PanicOnErrors {
-			panic(err)
-		}
 		log(err)
 	}
 }
@@ -237,9 +232,6 @@ func Error(format string, v ...interface{}) {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Red, "[ERROR]")
 		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
-		if PanicOnErrors {
-			panic(err)
-		}
 		log(err)
 	}
 }
@@ -251,10 +243,8 @@ func Fatalln(v ...interface{}) {
 		f = strings.Trim(f, "[]")
 		l := getlabel(Red, "[FATAL]")
 		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		if PanicOnErrors {
-			panic(err)
-		}
 		log(err)
+		os.Exit(1)
 	}
 }
 
@@ -264,15 +254,14 @@ func Fatal(format string, v ...interface{}) {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Red, "[FATAL]")
 		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
-		if PanicOnErrors {
-			panic(err)
-		}
 		log(err)
+		os.Exit(1)
+
 	}
 }
 
 func getlabel(color, label string) string {
-	if UseColors {
+	if useColors {
 		return color + label + Rtd
 	}
 	return label
