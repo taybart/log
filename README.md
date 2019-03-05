@@ -34,22 +34,28 @@ func main() {
   amount := 1
   thingy := "thingy"
 
+  log.Trace(amount, thingy) // stub for "ln" version
   log.Traceln(amount, thingy)
-  log.Trace("test %s", thingy)
+  log.Tracef("test %s", thingy)
 
+  log.Verbose(amount, thingy) // stub for "ln" version
   log.Verboseln(amount, thingy)
-  log.Verbose("test %s", thingy)
+  log.Verbosef("test %s", thingy)
 
+  log.Debug(amount) // stub for "ln" version
   log.Debugln(amount)
-  log.Debug("test %s", thingy)
+  log.Debugf("test %s", thingy)
 
+  log.Info(amount, thingy) // stub for "ln" version
   log.Infoln(amount, thingy)
-  log.Info("test %s", thingy)
+  log.Infof("test %s", thingy)
 
+  log.Warn(amount, thingy) // stub for "ln" version
   log.Warnln(amount, thingy)
-  log.Warn("test %s", thingy)
+  log.Warnf("test %s", thingy)
 
+  log.Error(amount, thingy) // stub for "ln" version
   log.Errorln(amount, thingy)
-  log.Error("test %s", thingy)
+  log.Errorf("test %s", thingy)
 }
 ```

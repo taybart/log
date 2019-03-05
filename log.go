@@ -89,6 +89,11 @@ func SetOutput(filename string) error {
 	return nil
 }
 
+// Trace print var with no format
+func Trace(v ...interface{}) {
+	Traceln(v)
+}
+
 // Traceln print var with no format
 func Traceln(v ...interface{}) {
 	if level <= DEBUG {
@@ -100,14 +105,19 @@ func Traceln(v ...interface{}) {
 	}
 }
 
-// Trace logging
-func Trace(format string, v ...interface{}) {
+// Tracef logging
+func Tracef(format string, v ...interface{}) {
 	if level <= TRACE {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Gray, "[TRACE]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
+}
+
+// Verbose print var with no format
+func Verbose(v ...interface{}) {
+	Verboseln(v)
 }
 
 // Verboseln print var with no format
@@ -121,14 +131,19 @@ func Verboseln(v ...interface{}) {
 	}
 }
 
-// Verbose logging
-func Verbose(format string, v ...interface{}) {
+// Verbosef logging
+func Verbosef(format string, v ...interface{}) {
 	if level <= VERBOSE {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Purple, "[VERBOSE]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
+}
+
+// Debug print var with no format
+func Debug(v ...interface{}) {
+	Debugln(v)
 }
 
 // Debugln print var with no format
@@ -142,14 +157,19 @@ func Debugln(v ...interface{}) {
 	}
 }
 
-// Debug logging
-func Debug(format string, v ...interface{}) {
+// Debugf logging
+func Debugf(format string, v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Blue, "[DEBUG]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
+}
+
+// Info info with no format
+func Info(v ...interface{}) {
+	Infoln(v)
 }
 
 // Infoln info with no format
@@ -163,14 +183,19 @@ func Infoln(v ...interface{}) {
 	}
 }
 
-// Info logging
-func Info(format string, v ...interface{}) {
+// Infof logging
+func Infof(format string, v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Green, "[INFO]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
+}
+
+// Test test with no format
+func Test(v ...interface{}) {
+	Testln(v)
 }
 
 // Testln test with no format
@@ -184,14 +209,19 @@ func Testln(v ...interface{}) {
 	}
 }
 
-// Test logging
-func Test(format string, v ...interface{}) {
+// Testf logging
+func Testf(format string, v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Green, "[TEST]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
+}
+
+// Warn error var with no format
+func Warn(v ...interface{}) {
+	Warnln(v)
 }
 
 // Warnln error var with no format
@@ -205,14 +235,19 @@ func Warnln(v ...interface{}) {
 	}
 }
 
-// Warn logging
-func Warn(format string, v ...interface{}) {
+// Warnf logging
+func Warnf(format string, v ...interface{}) {
 	if level <= WARN {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Yellow, "[WARN]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
 	}
+}
+
+// Error error var with no format
+func Error(v ...interface{}) {
+	Errorln(v)
 }
 
 // Errorln error var with no format
@@ -226,14 +261,19 @@ func Errorln(v ...interface{}) {
 	}
 }
 
-// Error logging
-func Error(format string, v ...interface{}) {
+// Errorf logging
+func Errorf(format string, v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Red, "[ERROR]")
 		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(err)
 	}
+}
+
+// Fatal error var with no format
+func Fatal(v ...interface{}) {
+	Fatalln(v)
 }
 
 // Fatalln error var with no format
@@ -248,8 +288,8 @@ func Fatalln(v ...interface{}) {
 	}
 }
 
-// Fatal logging
-func Fatal(format string, v ...interface{}) {
+// Fatalf logging
+func Fatalf(format string, v ...interface{}) {
 	if level <= FATAL {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Red, "[FATAL]")
