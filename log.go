@@ -283,8 +283,10 @@ func Fatalln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		l := getlabel(Red, "[FATAL]")
+		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		log(err)
 		_, file, line, _ := runtime.Caller(2)
-		err := fmt.Sprintf("%v %v %v\n%v %v\n", time.Now().Format(timeFmt), l, f, file, line)
+		err = fmt.Sprintf("%v %v %v: %v\n", time.Now().Format(timeFmt), l, file, line)
 		log(err)
 		os.Exit(1)
 	}
@@ -297,7 +299,9 @@ func Fatalf(format string, v ...interface{}) {
 		l := getlabel(Red, "[FATAL]")
 
 		_, file, line, _ := runtime.Caller(2)
-		err := fmt.Sprintf("%v %v %v\n%v %v", time.Now().Format(timeFmt), l, f, file, line)
+		err := fmt.Sprintf("%v %v %v\n%v: %v", time.Now().Format(timeFmt), l, f, file, line)
+		log(err)
+		err = fmt.Sprintf("%v %v %v: %v", time.Now().Format(timeFmt), l, file, line)
 		log(err)
 		os.Exit(1)
 
