@@ -3,6 +3,7 @@ package log
 import (
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 	"time"
 )
@@ -282,7 +283,8 @@ func Fatalln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		l := getlabel(Red, "[FATAL]")
-		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		_, file, line, _ := runtime.Caller(1)
+		err := fmt.Sprintf("%v %v %v\n%v %v\n", time.Now().Format(timeFmt), l, f, file, line)
 		log(err)
 		os.Exit(1)
 	}
@@ -293,7 +295,9 @@ func Fatalf(format string, v ...interface{}) {
 	if level <= FATAL {
 		f := fmt.Sprintf(format, v...)
 		l := getlabel(Red, "[FATAL]")
-		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
+
+		_, file, line, _ := runtime.Caller(1)
+		err := fmt.Sprintf("%v %v %v\n%v %v", time.Now().Format(timeFmt), l, f, file, line)
 		log(err)
 		os.Exit(1)
 
