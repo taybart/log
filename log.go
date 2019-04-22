@@ -67,6 +67,7 @@ var useColors = true
 
 // UseColors used to set colors
 func UseColors(use bool) {
+	useColors = use
 }
 
 // SetLevel used to set logging level
