@@ -91,6 +91,29 @@ func SetOutput(filename string) error {
 	return nil
 }
 
+// Print print var with no format
+func Print(v ...interface{}) {
+	Traceln(v)
+}
+
+// Println print var with no format
+func Println(v ...interface{}) {
+	if level <= DEBUG {
+		f := fmt.Sprintf("%v", v)
+		f = strings.Trim(f, "[]")
+		l := getlabel(Gray, "[TRACE]")
+		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
+		log(o)
+	}
+}
+
+// Printf logging
+func Printf(format string, v ...interface{}) {
+	f := fmt.Sprintf(format, v...)
+	o := fmt.Sprintf("%v %v", time.Now().Format(timeFmt), f)
+	log(o)
+}
+
 // Trace print var with no format
 func Trace(v ...interface{}) {
 	Traceln(v)
