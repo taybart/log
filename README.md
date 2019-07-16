@@ -27,7 +27,7 @@ func main() {
   log.SetLevel(log.TRACE)
   log.SetTimeFmt("2006-01-02 15:04:05") // Default time format
 
-  log.SetOutput("./logifle.log") // defaults to stdout
+  log.SetOutput("./logfile.log") // defaults to stdout
 
   log.UseColors(true) // defaults to true
 
