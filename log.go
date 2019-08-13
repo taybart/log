@@ -60,7 +60,9 @@ const (
 
 var level = INFO
 var timeFmt = "2006-01-02 15:04:05"
-var output = os.Stdout
+
+// Output for log
+var Output = os.Stdout
 
 // UseColors allow console coloring
 var useColors = true
@@ -87,7 +89,7 @@ func SetOutput(filename string) error {
 	if err != nil {
 		return err
 	}
-	output = logfile
+	Output = logfile
 	return nil
 }
 
@@ -339,5 +341,5 @@ func getlabel(color, label string) string {
 	return label
 }
 func log(s string) {
-	output.Write([]byte(s))
+	Output.Write([]byte(s))
 }
