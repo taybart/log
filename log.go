@@ -30,20 +30,6 @@ const (
 	FATAL
 )
 
-/* // Colors
-const (
-	// Color escape
-	ce     = "\033["
-	gray   = ce + "37m"
-	purple = ce + "35m"
-	blue   = ce + "34m"
-	yellow = ce + "33m"
-	green  = ce + "32m"
-	red    = ce + "31m"
-	// Return to default
-	rtd = ce + "0m"
-) */
-
 // Colors
 const (
 	// Color escape
