@@ -316,7 +316,6 @@ func Fatalf(format string, v ...interface{}) {
 		err = fmt.Sprintf("%v %v %v: %v", time.Now().Format(timeFmt), l, file, line)
 		log(err)
 		os.Exit(1)
-
 	}
 }
 
@@ -327,5 +326,8 @@ func getlabel(color, label string) string {
 	return label
 }
 func log(s string) {
-	Output.Write([]byte(s))
+	_, err := Output.Write([]byte(s))
+	if err != nil {
+		fmt.Println("[LOG ERROR] Issue with log package", err)
+	}
 }
