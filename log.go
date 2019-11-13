@@ -329,18 +329,21 @@ func Middleware(next http.HandlerFunc) http.HandlerFunc {
 			start := time.Now()
 			next(rec, r)
 			l := getlabel(Blue, "[HTTP]")
-			if rec.Result().StatusCode > 300 {
+			if rec.Result().StatusCode >= 400 {
 				l = getlabel(Red, "[ERROR]")
 			}
-			o := fmt.Sprintf("%s %v %s %s %s %s %v\n",
-				time.Now().Format(timeFmt),
-				l,
-				r.Method,
-				rec.Result().Status,
+			ip := r.Header.Get("X-Forwarded-For")
+			if ip == "" {
+				ip = strings.Split(r.RemoteAddr, ":")[0]
+
+			}
+			o := fmt.Sprintln(time.Now().Format(timeFmt), l,
+				ip,
 				time.Since(start),
+				r.Method,
+				rec.Result().StatusCode,
 				r.URL.Path,
-				Rtd,
-			)
+				Rtd)
 			log(o)
 			for k, v := range rec.HeaderMap {
 				w.Header()[k] = v
