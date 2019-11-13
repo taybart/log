@@ -2,6 +2,8 @@ package log
 
 import (
 	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"runtime"
 	"strings"
@@ -70,7 +72,6 @@ func SetTimeFmt(f string) {
 
 // SetOutput used to set log output
 func SetOutput(filename string) error {
-
 	logfile, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
@@ -316,6 +317,33 @@ func Fatalf(format string, v ...interface{}) {
 		err = fmt.Sprintf("%v %v %v: %v", time.Now().Format(timeFmt), l, file, line)
 		log(err)
 		os.Exit(1)
+	}
+}
+
+func Middleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		rec := httptest.NewRecorder()
+		start := time.Now()
+		next(rec, r)
+		l := getlabel(Blue, "[HTTP]")
+		if rec.Result().StatusCode > 300 {
+			l = getlabel(Red, "[ERROR]")
+		}
+		o := fmt.Sprintf("%s %v %s %s %s %s %v\n",
+			time.Now().Format(timeFmt),
+			l,
+			r.Method,
+			rec.Result().Status,
+			time.Since(start),
+			r.URL.Path,
+			Rtd,
+		)
+		log(o)
+		for k, v := range rec.HeaderMap {
+			w.Header()[k] = v
+		}
+		w.WriteHeader(rec.Code)
+		rec.Body.WriteTo(w)
 	}
 }
 
