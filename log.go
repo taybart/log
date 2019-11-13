@@ -20,6 +20,8 @@ const (
 	VERBOSE
 	// DEBUG level
 	DEBUG
+	// HTTP level
+	HTTP
 	// INFO level
 	INFO
 	// TEST special level for testing
@@ -322,28 +324,30 @@ func Fatalf(format string, v ...interface{}) {
 
 func Middleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		rec := httptest.NewRecorder()
-		start := time.Now()
-		next(rec, r)
-		l := getlabel(Blue, "[HTTP]")
-		if rec.Result().StatusCode > 300 {
-			l = getlabel(Red, "[ERROR]")
+		if level <= HTTP {
+			rec := httptest.NewRecorder()
+			start := time.Now()
+			next(rec, r)
+			l := getlabel(Blue, "[HTTP]")
+			if rec.Result().StatusCode > 300 {
+				l = getlabel(Red, "[ERROR]")
+			}
+			o := fmt.Sprintf("%s %v %s %s %s %s %v\n",
+				time.Now().Format(timeFmt),
+				l,
+				r.Method,
+				rec.Result().Status,
+				time.Since(start),
+				r.URL.Path,
+				Rtd,
+			)
+			log(o)
+			for k, v := range rec.HeaderMap {
+				w.Header()[k] = v
+			}
+			w.WriteHeader(rec.Code)
+			rec.Body.WriteTo(w)
 		}
-		o := fmt.Sprintf("%s %v %s %s %s %s %v\n",
-			time.Now().Format(timeFmt),
-			l,
-			r.Method,
-			rec.Result().Status,
-			time.Since(start),
-			r.URL.Path,
-			Rtd,
-		)
-		log(o)
-		for k, v := range rec.HeaderMap {
-			w.Header()[k] = v
-		}
-		w.WriteHeader(rec.Code)
-		rec.Body.WriteTo(w)
 	}
 }
 
