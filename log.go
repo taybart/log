@@ -330,7 +330,7 @@ func Middleware(next http.HandlerFunc) http.HandlerFunc {
 			next(rec, r)
 			l := getlabel(Blue, "[HTTP]")
 			if rec.Result().StatusCode >= 400 {
-				l = getlabel(Red, "[ERROR]")
+				l = getlabel(Red, "[HTTP]")
 			}
 			ip := r.Header.Get("X-Forwarded-For")
 			if ip == "" {
