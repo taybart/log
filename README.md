@@ -68,28 +68,29 @@ package main
 import (
   "fmt"
 
-  "github.com/gorilla/mux"
-	"github.com/taybart/log"
+  "github.com/taybart/log"
 )
+
 type server struct {
-	router *mux.Router
+  router *http.ServeMux
 }
 
 func (s *server) routes() {
-	s.router.HandleFunc("/ping", log.Middleware(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "pong")
-	}))
+  // Add logging to a route
+  s.router.HandleFunc("/ping", log.Middleware(func(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprint(w, "pong")
+  }))
 }
 
 func main() {
-	srv := &http.Server{
-		Handler:      s.router,
-		Addr:         c.addr,
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
-	}
+  srv := &http.Server{
+    Handler:      s.router,
+    Addr:         c.addr,
+    WriteTimeout: 15 * time.Second,
+    ReadTimeout:  15 * time.Second,
+  }
 
-	log.Infof("Serving at %s\n", c.addr)
-	log.Fatal(srv.ListenAndServe())
+  log.Infof("Serving at %s\n", c.addr)
+  log.Fatal(srv.ListenAndServe())
 }
 ```
