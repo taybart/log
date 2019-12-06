@@ -105,7 +105,7 @@ func Println(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		if plain {
-			log(f)
+			log(fmt.Sprintf("%s\n", f))
 			return
 		}
 		l := getlabel(Gray, "[TRACE]")
@@ -136,7 +136,7 @@ func Traceln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		if plain {
-			log(f)
+			log(fmt.Sprintf("%s\n", f))
 			return
 		}
 		l := getlabel(Gray, "[TRACE]")
@@ -170,7 +170,7 @@ func Verboseln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		if plain {
-			log(f)
+			log(fmt.Sprintf("%s\n", f))
 			return
 		}
 		l := getlabel(Purple, "[VERBOSE]")
@@ -204,7 +204,7 @@ func Debugln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		if plain {
-			log(f)
+			log(fmt.Sprintf("%s\n", f))
 			return
 		}
 		l := getlabel(Blue, "[DEBUG]")
@@ -238,7 +238,7 @@ func Infoln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		if plain {
-			log(f)
+			log(fmt.Sprintf("%s\n", f))
 			return
 		}
 		l := getlabel(Green, "[INFO]")
@@ -272,7 +272,7 @@ func Testln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		if plain {
-			log(f)
+			log(fmt.Sprintf("%s\n", f))
 			return
 		}
 		l := getlabel(Green, "[TEST]")
@@ -306,7 +306,7 @@ func Warnln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		if plain {
-			log(f)
+			log(fmt.Sprintf("%s\n", f))
 			return
 		}
 		l := getlabel(Yellow, "[WARN]")
@@ -339,7 +339,7 @@ func Errorln(v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf("%v", v)
 		if plain {
-			log(f)
+			log(fmt.Sprintf("%s\n", f))
 			return
 		}
 		f = strings.Trim(f, "[]")
@@ -374,7 +374,7 @@ func Fatalln(v ...interface{}) {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		if plain {
-			log(f)
+			log(fmt.Sprintf("%s\n", f))
 			os.Exit(1)
 		}
 		l := getlabel(Red, "[FATAL]")
