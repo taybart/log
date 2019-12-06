@@ -51,6 +51,7 @@ const (
 var level = INFO
 var timeFmt = "2006-01-02 15:04:05"
 var plain = false
+var timeOnly = false
 
 // Output for log
 var Output = os.Stdout
@@ -76,6 +77,11 @@ func SetTimeFmt(f string) {
 // SetPlain output, will not print time or level
 func SetPlain() {
 	plain = true
+}
+
+// SetTimeOnly output, will not print time or level
+func SetTimeOnly() {
+	timeOnly = true
 }
 
 // SetOutput used to set log output
@@ -433,6 +439,9 @@ func Middleware(next http.HandlerFunc) http.HandlerFunc {
 }
 
 func getlabel(color, label string) string {
+	if timeOnly {
+		return ""
+	}
 	if useColors {
 		return color + label + Rtd
 	}
