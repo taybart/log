@@ -50,6 +50,7 @@ const (
 
 var level = INFO
 var timeFmt = "2006-01-02 15:04:05"
+var plain = false
 
 // Output for log
 var Output = os.Stdout
@@ -72,6 +73,11 @@ func SetTimeFmt(f string) {
 	timeFmt = f
 }
 
+// SetPlain output, will not print time or level
+func SetPlain() {
+	plain = true
+}
+
 // SetOutput used to set log output
 func SetOutput(filename string) error {
 	logfile, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -92,6 +98,10 @@ func Println(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Gray, "[TRACE]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -101,6 +111,10 @@ func Println(v ...interface{}) {
 // Printf logging
 func Printf(format string, v ...interface{}) {
 	f := fmt.Sprintf(format, v...)
+	if plain {
+		log(f)
+		return
+	}
 	o := fmt.Sprintf("%v %v", time.Now().Format(timeFmt), f)
 	log(o)
 }
@@ -115,6 +129,10 @@ func Traceln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Gray, "[TRACE]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -125,6 +143,10 @@ func Traceln(v ...interface{}) {
 func Tracef(format string, v ...interface{}) {
 	if level <= TRACE {
 		f := fmt.Sprintf(format, v...)
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Gray, "[TRACE]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -141,6 +163,10 @@ func Verboseln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Purple, "[VERBOSE]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -151,6 +177,10 @@ func Verboseln(v ...interface{}) {
 func Verbosef(format string, v ...interface{}) {
 	if level <= VERBOSE {
 		f := fmt.Sprintf(format, v...)
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Purple, "[VERBOSE]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -167,6 +197,10 @@ func Debugln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Blue, "[DEBUG]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -177,6 +211,10 @@ func Debugln(v ...interface{}) {
 func Debugf(format string, v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf(format, v...)
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Blue, "[DEBUG]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -193,6 +231,10 @@ func Infoln(v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Green, "[INFO]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -203,6 +245,10 @@ func Infoln(v ...interface{}) {
 func Infof(format string, v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf(format, v...)
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Green, "[INFO]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -219,6 +265,10 @@ func Testln(v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Green, "[TEST]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -229,6 +279,10 @@ func Testln(v ...interface{}) {
 func Testf(format string, v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf(format, v...)
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Green, "[TEST]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -245,6 +299,10 @@ func Warnln(v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Yellow, "[WARN]")
 		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -255,6 +313,10 @@ func Warnln(v ...interface{}) {
 func Warnf(format string, v ...interface{}) {
 	if level <= WARN {
 		f := fmt.Sprintf(format, v...)
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Yellow, "[WARN]")
 		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(o)
@@ -270,6 +332,10 @@ func Error(v ...interface{}) {
 func Errorln(v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf("%v", v)
+		if plain {
+			log(f)
+			return
+		}
 		f = strings.Trim(f, "[]")
 		l := getlabel(Red, "[ERROR]")
 		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
@@ -281,6 +347,10 @@ func Errorln(v ...interface{}) {
 func Errorf(format string, v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf(format, v...)
+		if plain {
+			log(f)
+			return
+		}
 		l := getlabel(Red, "[ERROR]")
 		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
 		log(err)
@@ -297,6 +367,10 @@ func Fatalln(v ...interface{}) {
 	if level <= FATAL {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
+		if plain {
+			log(f)
+			os.Exit(1)
+		}
 		l := getlabel(Red, "[FATAL]")
 		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
 		log(err)
@@ -311,6 +385,10 @@ func Fatalln(v ...interface{}) {
 func Fatalf(format string, v ...interface{}) {
 	if level <= FATAL {
 		f := fmt.Sprintf(format, v...)
+		if plain {
+			log(f)
+			os.Exit(1)
+		}
 		l := getlabel(Red, "[FATAL]")
 
 		_, file, line, _ := runtime.Caller(2)
