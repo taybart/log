@@ -46,15 +46,15 @@ func main() {
   log.Debugln(amount)
   log.Debugf("test %s", thingy)
 
-  log.Info(amount, thingy) // stub for "ln" version
+  log.Info(amount, thingy) // alias for "ln" version
   log.Infoln(amount, thingy)
   log.Infof("test %s", thingy)
 
-  log.Warn(amount, thingy) // stub for "ln" version
+  log.Warn(amount, thingy) // alias for "ln" version
   log.Warnln(amount, thingy)
   log.Warnf("test %s", thingy)
 
-  log.Error(amount, thingy) // stub for "ln" version
+  log.Error(amount, thingy) // alias for "ln" version
   log.Errorln(amount, thingy)
   log.Errorf("test %s", thingy)
 }
