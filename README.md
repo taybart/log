@@ -34,15 +34,15 @@ func main() {
   amount := 1
   thingy := "thingy"
 
-  log.Trace(amount, thingy) // stub for "ln" version
+  log.Trace(amount, thingy) // alias for "ln" version
   log.Traceln(amount, thingy)
   log.Tracef("test %s", thingy)
 
-  log.Verbose(amount, thingy) // stub for "ln" version
+  log.Verbose(amount, thingy) // alias for "ln" version
   log.Verboseln(amount, thingy)
   log.Verbosef("test %s", thingy)
 
-  log.Debug(amount) // stub for "ln" version
+  log.Debug(amount) // alias for "ln" version
   log.Debugln(amount)
   log.Debugf("test %s", thingy)
 
