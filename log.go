@@ -15,15 +15,15 @@ type Level int
 
 const (
 	// TRACE lowest = most verbose
-	TRACE Level = iota
+	TRACE Level = iota + 1
 	// VERBOSE level
 	VERBOSE
 	// DEBUG level
 	DEBUG
-	// HTTP level
-	HTTP
 	// INFO level
 	INFO
+	// HTTP level
+	HTTP
 	// TEST special level for testing
 	TEST
 	// WARN level
@@ -48,9 +48,14 @@ const (
 	Rtd = ce + "0m"
 )
 
+const (
+	addnewline = true
+)
+
 var level = INFO
 var timeFmt = "2006-01-02 15:04:05"
 var plain = false
+var noTime = false
 var timeOnly = false
 
 // Output for log
@@ -77,6 +82,11 @@ func SetTimeFmt(f string) {
 // SetPlain output, will not print time or level
 func SetPlain() {
 	plain = true
+}
+
+// SetTimeOnly output, will not print time or level
+func SetNoTime() {
+	noTime = true
 }
 
 // SetTimeOnly output, will not print time or level
@@ -174,8 +184,7 @@ func Verboseln(v ...interface{}) {
 			return
 		}
 		l := getlabel(Purple, "[VERBOSE]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, addnewline))
 	}
 }
 
@@ -188,8 +197,7 @@ func Verbosef(format string, v ...interface{}) {
 			return
 		}
 		l := getlabel(Purple, "[VERBOSE]")
-		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, !addnewline))
 	}
 }
 
@@ -203,13 +211,8 @@ func Debugln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		if plain {
-			log(fmt.Sprintf("%s\n", f))
-			return
-		}
 		l := getlabel(Blue, "[DEBUG]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, addnewline))
 	}
 }
 
@@ -217,13 +220,8 @@ func Debugln(v ...interface{}) {
 func Debugf(format string, v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf(format, v...)
-		if plain {
-			log(f)
-			return
-		}
 		l := getlabel(Blue, "[DEBUG]")
-		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, !addnewline))
 	}
 }
 
@@ -237,13 +235,8 @@ func Infoln(v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		if plain {
-			log(fmt.Sprintf("%s\n", f))
-			return
-		}
 		l := getlabel(Green, "[INFO]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, addnewline))
 	}
 }
 
@@ -251,13 +244,8 @@ func Infoln(v ...interface{}) {
 func Infof(format string, v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf(format, v...)
-		if plain {
-			log(f)
-			return
-		}
 		l := getlabel(Green, "[INFO]")
-		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, !addnewline))
 	}
 }
 
@@ -271,13 +259,8 @@ func Testln(v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		if plain {
-			log(fmt.Sprintf("%s\n", f))
-			return
-		}
 		l := getlabel(Green, "[TEST]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, addnewline))
 	}
 }
 
@@ -285,13 +268,8 @@ func Testln(v ...interface{}) {
 func Testf(format string, v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf(format, v...)
-		if plain {
-			log(f)
-			return
-		}
 		l := getlabel(Green, "[TEST]")
-		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, !addnewline))
 	}
 }
 
@@ -305,13 +283,8 @@ func Warnln(v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		if plain {
-			log(fmt.Sprintf("%s\n", f))
-			return
-		}
 		l := getlabel(Yellow, "[WARN]")
-		o := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, addnewline))
 	}
 }
 
@@ -319,13 +292,8 @@ func Warnln(v ...interface{}) {
 func Warnf(format string, v ...interface{}) {
 	if level <= WARN {
 		f := fmt.Sprintf(format, v...)
-		if plain {
-			log(f)
-			return
-		}
 		l := getlabel(Yellow, "[WARN]")
-		o := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
-		log(o)
+		log(createOutput(l, f, !addnewline))
 	}
 }
 
@@ -338,14 +306,9 @@ func Error(v ...interface{}) {
 func Errorln(v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf("%v", v)
-		if plain {
-			log(fmt.Sprintf("%s\n", f))
-			return
-		}
 		f = strings.Trim(f, "[]")
 		l := getlabel(Red, "[ERROR]")
-		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		log(err)
+		log(createOutput(l, f, addnewline))
 	}
 }
 
@@ -353,13 +316,8 @@ func Errorln(v ...interface{}) {
 func Errorf(format string, v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf(format, v...)
-		if plain {
-			log(f)
-			return
-		}
 		l := getlabel(Red, "[ERROR]")
-		err := fmt.Sprintf("%v %v %v", time.Now().Format(timeFmt), l, f)
-		log(err)
+		log(createOutput(l, f, !addnewline))
 	}
 }
 
@@ -373,16 +331,11 @@ func Fatalln(v ...interface{}) {
 	if level <= FATAL {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
-		if plain {
-			log(fmt.Sprintf("%s\n", f))
-			os.Exit(1)
-		}
 		l := getlabel(Red, "[FATAL]")
-		err := fmt.Sprintf("%v %v %v\n", time.Now().Format(timeFmt), l, f)
-		log(err)
+		log(createOutput(l, f, addnewline))
 		_, file, line, _ := runtime.Caller(2)
-		err = fmt.Sprintf("%v %v %v: %v\n", time.Now().Format(timeFmt), l, file, line)
-		log(err)
+		f = fmt.Sprintf("%v: %v\n", file, line)
+		log(createOutput(l, f, addnewline))
 		os.Exit(1)
 	}
 }
@@ -391,50 +344,47 @@ func Fatalln(v ...interface{}) {
 func Fatalf(format string, v ...interface{}) {
 	if level <= FATAL {
 		f := fmt.Sprintf(format, v...)
-		if plain {
-			log(f)
-			os.Exit(1)
-		}
 		l := getlabel(Red, "[FATAL]")
-
+		log(createOutput(l, f, addnewline))
 		_, file, line, _ := runtime.Caller(2)
-		err := fmt.Sprintf("%v %v %v\n%v: %v", time.Now().Format(timeFmt), l, f, file, line)
-		log(err)
-		err = fmt.Sprintf("%v %v %v: %v", time.Now().Format(timeFmt), l, file, line)
-		log(err)
+		f = fmt.Sprintf("%v: %v\n", file, line)
+		log(createOutput(l, f, addnewline))
 		os.Exit(1)
 	}
 }
 
 func Middleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if level <= HTTP {
-			rec := httptest.NewRecorder()
-			start := time.Now()
-			next(rec, r)
-			l := getlabel(Blue, "[HTTP]")
-			if rec.Result().StatusCode >= 400 {
-				l = getlabel(Red, "[HTTP]")
-			}
-			ip := r.Header.Get("X-Forwarded-For")
-			if ip == "" {
-				ip = strings.Split(r.RemoteAddr, ":")[0]
-
-			}
-			o := fmt.Sprintln(time.Now().Format(timeFmt), l,
-				ip,
-				time.Since(start),
-				r.Method,
-				rec.Result().StatusCode,
-				r.URL.Path,
-				Rtd)
-			log(o)
-			for k, v := range rec.HeaderMap {
-				w.Header()[k] = v
-			}
-			w.WriteHeader(rec.Code)
-			rec.Body.WriteTo(w)
+		if level > HTTP {
+			next(w, r)
+			return
 		}
+
+		rec := httptest.NewRecorder()
+		start := time.Now()
+		next(rec, r)
+		l := getlabel(Blue, "[HTTP]")
+		if rec.Result().StatusCode >= 400 {
+			l = getlabel(Red, "[HTTP]")
+		}
+		ip := r.Header.Get("X-Forwarded-For")
+		if ip == "" {
+			ip = strings.Split(r.RemoteAddr, ":")[0]
+		}
+		o := fmt.Sprintln(time.Now().Format(timeFmt), l,
+			ip,
+			time.Since(start),
+			r.Method,
+			rec.Result().StatusCode,
+			r.URL.Path,
+			Rtd)
+		log(o)
+
+		for k, v := range rec.HeaderMap {
+			w.Header()[k] = v
+		}
+		w.WriteHeader(rec.Code)
+		rec.Body.WriteTo(w)
 	}
 }
 
@@ -447,6 +397,21 @@ func getlabel(color, label string) string {
 	}
 	return label
 }
+
+func createOutput(label, rest string, addnewline bool) string {
+	nl := ""
+	if addnewline {
+		nl = "\n"
+	}
+	if plain {
+		return fmt.Sprintf("%s%s", rest, nl)
+	}
+	if noTime {
+		return fmt.Sprintf("%v %v%s", label, rest, nl)
+	}
+	return fmt.Sprintf("%v %v %v%s", time.Now().Format(timeFmt), label, rest, nl)
+}
+
 func log(s string) {
 	_, err := Output.Write([]byte(s))
 	if err != nil {
