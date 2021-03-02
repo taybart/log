@@ -2,6 +2,7 @@ package log
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -58,17 +59,19 @@ const (
 	addnewline = true
 )
 
-var level = INFO
-var timeFmt = "2006-01-02 15:04:05"
-var plain = false
-var noTime = false
-var timeOnly = false
+var (
+	level    = INFO
+	timeFmt  = "2006-01-02 15:04:05"
+	plain    = false
+	noTime   = false
+	timeOnly = false
 
-// Output for log
-var Output = os.Stdout
+	// Output for log
+	Output io.Writer = os.Stdout
 
-// UseColors allow console coloring
-var useColors = true
+	// UseColors allow console coloring
+	useColors = true
+)
 
 // UseColors used to set colors
 func UseColors(use bool) {
@@ -98,6 +101,11 @@ func SetNoTime() {
 // SetTimeOnly output, will not print time or level
 func SetTimeOnly() {
 	timeOnly = true
+}
+
+// SetOutputWriter used to set log io.Writer
+func SetOutputWriter(w io.Writer) {
+	Output = w
 }
 
 // SetOutput used to set log output
