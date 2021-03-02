@@ -37,13 +37,19 @@ const (
 // Colors
 const (
 	// Color escape
-	ce     = "\033["
-	Gray   = ce + "37m"
-	Purple = ce + "35m"
-	Blue   = ce + "34m"
-	Yellow = ce + "33m"
-	Green  = ce + "32m"
-	Red    = ce + "31m"
+	ce         = "\033["
+	Gray       = ce + "37m"
+	Purple     = ce + "35m"
+	Blue       = ce + "34m"
+	Yellow     = ce + "33m"
+	Green      = ce + "32m"
+	Red        = ce + "31m"
+	GrayBold   = Gray + "1"
+	PurpleBold = Purple + "1"
+	BlueBold   = Blue + "1"
+	YellowBold = Yellow + "1"
+	GreenBold  = Green + "1"
+	RedBold    = Red + "1"
 	// Return to default
 	Rtd = ce + "0m"
 )
