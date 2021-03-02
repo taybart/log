@@ -38,19 +38,47 @@ const (
 // Colors
 const (
 	// Color escape
-	ce         = "\033["
-	Gray       = ce + "37m"
-	Purple     = ce + "35m"
-	Blue       = ce + "34m"
-	Yellow     = ce + "33m"
-	Green      = ce + "32m"
-	Red        = ce + "31m"
-	GrayBold   = Gray + "1"
-	PurpleBold = Purple + "1"
-	BlueBold   = Blue + "1"
-	YellowBold = Yellow + "1"
-	GreenBold  = Green + "1"
-	RedBold    = Red + "1"
+	ce = "\033[0;"
+
+	Gray   = ce + "37m"
+	Purple = ce + "35m"
+	Blue   = ce + "34m"
+	Yellow = ce + "33m"
+	Green  = ce + "32m"
+	Red    = ce + "31m"
+
+	ceBold     = "\033[1;"
+	BoldGray   = ceBold + "37m"
+	BoldPurple = ceBold + "35m"
+	BoldBlue   = ceBold + "34m"
+	BoldYellow = ceBold + "33m"
+	BoldGreen  = ceBold + "32m"
+	BoldRed    = ceBold + "31m"
+
+	ceItalic     = "\033[3;"
+	ItalicGray   = ceItalic + "37m"
+	ItalicPurple = ceItalic + "35m"
+	ItalicBlue   = ceItalic + "34m"
+	ItalicYellow = ceItalic + "33m"
+	ItalicGreen  = ceItalic + "32m"
+	ItalicRed    = ceItalic + "31m"
+
+	ceUnderlined     = "\033[4;"
+	UnderlinedGray   = ceUnderlined + "37m"
+	UnderlinedPurple = ceUnderlined + "35m"
+	UnderlinedBlue   = ceUnderlined + "34m"
+	UnderlinedYellow = ceUnderlined + "33m"
+	UnderlinedGreen  = ceUnderlined + "32m"
+	UnderlinedRed    = ceUnderlined + "31m"
+
+	ceBlinking     = "\033[5;"
+	BlinkingGray   = ceBlinking + "37m"
+	BlinkingPurple = ceBlinking + "35m"
+	BlinkingBlue   = ceBlinking + "34m"
+	BlinkingYellow = ceBlinking + "33m"
+	BlinkingGreen  = ceBlinking + "32m"
+	BlinkingRed    = ceBlinking + "31m"
+
 	// Return to default
 	Rtd = ce + "0m"
 )
