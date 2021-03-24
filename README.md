@@ -94,3 +94,34 @@ func main() {
   log.Fatal(srv.ListenAndServe())
 }
 ```
+
+## Templates
+
+```go
+package main
+
+import (
+	"bytes"
+	"text/template"
+
+	"github.com/taybart/log"
+)
+
+type Block struct {
+	Text string
+}
+
+func main() {
+	log.SetPlain()
+	b := Block{Text: "hello world!"}
+	tmpl := `{{green "~~~~~START~~~~~" }}
+{{red .Text}}
+{{ green "~~~~~~END~~~~~~" }}`
+
+	t := template.Must(template.New("block").Funcs(log.TmplFuncs).Parse(tmpl))
+
+	var buf bytes.Buffer
+	t.Execute(&buf, b)
+	log.Info(buf.String())
+}
+```
