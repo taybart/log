@@ -19,7 +19,10 @@ Levels can be:
 ```go
 package main
 
-import "github.com/taybart/log"
+import (
+  "os"
+  "github.com/taybart/log"
+)
 
 
 // All levels
@@ -28,6 +31,7 @@ func main() {
   log.SetTimeFmt("2006-01-02 15:04:05") // Default time format
 
   log.SetOutput("./logfile.log") // defaults to stdout
+  log.SetOutputWriter(os.Stdout) // can also use an io.Writer
 
   log.UseColors(true) // defaults to true
 
