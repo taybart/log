@@ -2,7 +2,7 @@ package log
 
 import "fmt"
 
-var TplFuncs = map[string]interface{}{
+var TmplFuncs = map[string]interface{}{
 	"red":    red,
 	"gray":   gray,
 	"purple": purple,
