@@ -40,6 +40,7 @@ const (
 	// Color escape
 	ce = "\033[0;"
 
+	// Normal Colors
 	Gray   = ce + "37m"
 	Purple = ce + "35m"
 	Blue   = ce + "34m"
@@ -47,6 +48,7 @@ const (
 	Green  = ce + "32m"
 	Red    = ce + "31m"
 
+	// Bold Colors
 	ceBold     = "\033[1;"
 	BoldGray   = ceBold + "37m"
 	BoldPurple = ceBold + "35m"
@@ -55,6 +57,7 @@ const (
 	BoldGreen  = ceBold + "32m"
 	BoldRed    = ceBold + "31m"
 
+	// Italic Colors
 	ceItalic     = "\033[3;"
 	ItalicGray   = ceItalic + "37m"
 	ItalicPurple = ceItalic + "35m"
@@ -63,6 +66,7 @@ const (
 	ItalicGreen  = ceItalic + "32m"
 	ItalicRed    = ceItalic + "31m"
 
+	// Underlined Colors
 	ceUnderlined     = "\033[4;"
 	UnderlinedGray   = ceUnderlined + "37m"
 	UnderlinedPurple = ceUnderlined + "35m"
@@ -71,6 +75,7 @@ const (
 	UnderlinedGreen  = ceUnderlined + "32m"
 	UnderlinedRed    = ceUnderlined + "31m"
 
+	// Blinking Colors
 	ceBlinking     = "\033[5;"
 	BlinkingGray   = ceBlinking + "37m"
 	BlinkingPurple = ceBlinking + "35m"
@@ -88,55 +93,60 @@ const (
 )
 
 var (
-	level    = INFO
-	timeFmt  = "2006-01-02 15:04:05"
-	plain    = false
-	noTime   = false
+	// level : sets the log level, anything under will not be sent to "Output"
+	level = INFO
+	// timeFmt : go format for the time in the logs
+	timeFmt = "2006-01-02 15:04:05"
+	// plain : don't add level and time to logs (false is essentially fmt.Print()
+	plain = false
+	// noTime : don't add time to output, is not used if plain is set
+	noTime = false
+	// timeOnly : don't show level in logs, is not used if plain is set
 	timeOnly = false
 
-	// Output for log
+	// Output writer for log
 	Output io.Writer = os.Stdout
 
 	// UseColors allow console coloring
 	useColors = true
 )
 
-// UseColors used to set colors
+// UseColors : used to set colors
 func UseColors(use bool) {
 	useColors = use
 }
 
-// SetLevel used to set logging level
+// SetLevel : used to set logging level
 func SetLevel(l Level) {
 	level = l
 }
 
-// SetTimeFmt used to adjust time format for logs
+// SetTimeFmt : used to adjust time format for logs
 func SetTimeFmt(f string) {
 	timeFmt = f
 }
 
-// SetPlain output, will not print time or level
+// SetPlain : output, will not print time or level
 func SetPlain() {
 	plain = true
 }
 
-// SetTimeOnly output, will not print time or level
+// SetTimeOnly : output, will not print time or level
 func SetNoTime() {
 	noTime = true
 }
 
-// SetTimeOnly output, will not print time or level
+// SetTimeOnly : output, will not print time or level
 func SetTimeOnly() {
 	timeOnly = true
 }
 
-// SetOutputWriter used to set log io.Writer
+// SetOutputWriter : set log io.Writer, if logs should be streamed, the io.Writer can be passed here
 func SetOutputWriter(w io.Writer) {
 	Output = w
 }
 
-// SetOutput used to set log output
+// SetOutput : set log output to a specific file, default is stdout
 func SetOutput(filename string) error {
 	logfile, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
@@ -146,12 +156,12 @@ func SetOutput(filename string) error {
 	return nil
 }
 
-// Print print var with no format
+// Print :  print var with no format
 func Print(v ...interface{}) {
 	Traceln(v)
 }
 
-// Println print var with no format
+// Println : print var with no format
 func Println(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
@@ -166,7 +176,7 @@ func Println(v ...interface{}) {
 	}
 }
 
-// Printf logging
+// Printf : logging
 func Printf(format string, v ...interface{}) {
 	f := fmt.Sprintf(format, v...)
 	if plain {
@@ -177,12 +187,12 @@ func Printf(format string, v ...interface{}) {
 	log(o)
 }
 
-// Trace print var with no format
+// Trace : print var with no format
 func Trace(v ...interface{}) {
 	Traceln(v)
 }
 
-// Traceln print var with no format
+// Traceln : print var with no format
 func Traceln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
@@ -197,7 +207,7 @@ func Traceln(v ...interface{}) {
 	}
 }
 
-// Tracef logging
+// Tracef : logging
 func Tracef(format string, v ...interface{}) {
 	if level <= TRACE {
 		f := fmt.Sprintf(format, v...)
@@ -211,12 +221,12 @@ func Tracef(format string, v ...interface{}) {
 	}
 }
 
-// Verbose print var with no format
+// Verbose : print var with no format
 func Verbose(v ...interface{}) {
 	Verboseln(v)
 }
 
-// Verboseln print var with no format
+// Verboseln : print var with no format
 func Verboseln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
@@ -230,7 +240,7 @@ func Verboseln(v ...interface{}) {
 	}
 }
 
-// Verbosef logging
+// Verbosef : logging
 func Verbosef(format string, v ...interface{}) {
 	if level <= VERBOSE {
 		f := fmt.Sprintf(format, v...)
@@ -243,12 +253,12 @@ func Verbosef(format string, v ...interface{}) {
 	}
 }
 
-// Debug print var with no format
+// Debug : print var with no format
 func Debug(v ...interface{}) {
 	Debugln(v)
 }
 
-// Debugln print var with no format
+// Debugln : print var with no format
 func Debugln(v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf("%v", v)
@@ -258,7 +268,7 @@ func Debugln(v ...interface{}) {
 	}
 }
 
-// Debugf logging
+// Debugf : logging
 func Debugf(format string, v ...interface{}) {
 	if level <= DEBUG {
 		f := fmt.Sprintf(format, v...)
@@ -267,12 +277,12 @@ func Debugf(format string, v ...interface{}) {
 	}
 }
 
-// Info info with no format
+// Info : info with no format
 func Info(v ...interface{}) {
 	Infoln(v)
 }
 
-// Infoln info with no format
+// Infoln : info with no format
 func Infoln(v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf("%v", v)
@@ -282,7 +292,7 @@ func Infoln(v ...interface{}) {
 	}
 }
 
-// Infof logging
+// Infof : logging
 func Infof(format string, v ...interface{}) {
 	if level <= INFO {
 		f := fmt.Sprintf(format, v...)
@@ -291,12 +301,12 @@ func Infof(format string, v ...interface{}) {
 	}
 }
 
-// Test test with no format
+// Test : test with no format
 func Test(v ...interface{}) {
 	Testln(v)
 }
 
-// Testln test with no format
+// Testln : test with no format
 func Testln(v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf("%v", v)
@@ -306,7 +316,7 @@ func Testln(v ...interface{}) {
 	}
 }
 
-// Testf logging
+// Testf : logging
 func Testf(format string, v ...interface{}) {
 	if level <= TEST {
 		f := fmt.Sprintf(format, v...)
@@ -315,12 +325,12 @@ func Testf(format string, v ...interface{}) {
 	}
 }
 
-// Warn error var with no format
+// Warn : error var with no format
 func Warn(v ...interface{}) {
 	Warnln(v)
 }
 
-// Warnln error var with no format
+// Warnln : error var with no format
 func Warnln(v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf("%v", v)
@@ -330,7 +340,7 @@ func Warnln(v ...interface{}) {
 	}
 }
 
-// Warnf logging
+// Warnf : logging
 func Warnf(format string, v ...interface{}) {
 	if level <= WARN {
 		f := fmt.Sprintf(format, v...)
@@ -339,12 +349,12 @@ func Warnf(format string, v ...interface{}) {
 	}
 }
 
-// Error error var with no format
+// Error : error var with no format
 func Error(v ...interface{}) {
 	Errorln(v)
 }
 
-// Errorln error var with no format
+// Errorln : error var with no format
 func Errorln(v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf("%v", v)
@@ -354,7 +364,7 @@ func Errorln(v ...interface{}) {
 	}
 }
 
-// Errorf logging
+// Errorf : logging
 func Errorf(format string, v ...interface{}) {
 	if level <= ERROR {
 		f := fmt.Sprintf(format, v...)
@@ -363,12 +373,12 @@ func Errorf(format string, v ...interface{}) {
 	}
 }
 
-// Fatal error var with no format
+// Fatal : error var with no format
 func Fatal(v ...interface{}) {
 	Fatalln(v)
 }
 
-// Fatalln error var with no format
+// Fatalln : error var with no format
 func Fatalln(v ...interface{}) {
 	if level <= FATAL {
 		f := fmt.Sprintf("%v", v)
@@ -382,7 +392,7 @@ func Fatalln(v ...interface{}) {
 	}
 }
 
-// Fatalf logging
+// Fatalf : logging
 func Fatalf(format string, v ...interface{}) {
 	if level <= FATAL {
 		f := fmt.Sprintf(format, v...)
