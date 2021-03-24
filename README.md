@@ -30,8 +30,9 @@ func main() {
   log.SetLevel(log.TRACE)
   log.SetTimeFmt("2006-01-02 15:04:05") // Default time format
 
-  log.SetOutput("./logfile.log") // defaults to stdout
-  log.SetOutputWriter(os.Stdout) // can also use an io.Writer
+  // output defaults to stdout
+  log.SetOutput("./logfile.log") // set output file
+  log.SetOutputWriter(os.Stdout) // can also be set with an io.Writer
 
   log.UseColors(true) // defaults to true
 
