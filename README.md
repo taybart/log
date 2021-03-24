@@ -1,6 +1,6 @@
 # Log
 
-[![Build Status](https://travis-ci.org/taybart/log.svg)](https://travis-ci.org/taybart/log)
+[![Test](https://github.com/taybart/log/actions/workflows/test.yaml/badge.svg)](https://github.com/taybart/log/actions/workflows/test.yaml)
 
 Simple level logging
 
