@@ -1,6 +1,6 @@
 # Log
 
-[![Test](https://github.com/taybart/log/actions/workflows/test.yaml/badge.svg)](https://github.com/taybart/log/actions/workflows/test.yaml)
+[![Test](https://github.com/taybart/log/actions/workflows/test.yaml/badge.svg)](https://github.com/taybart/log/actions/workflows/test.yaml) [![Go Reference](https://pkg.go.dev/badge/github.com/taybart/log.svg)](https://pkg.go.dev/github.com/taybart/log)
 
 Simple level logging
 
