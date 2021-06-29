@@ -12,25 +12,25 @@ var TmplFuncs = map[string]interface{}{
 }
 
 func red(s string) string {
-	return fmt.Sprintf("%s%s%s", Red, s, Rtd)
+	return fmt.Sprintf("%s%s%s", Red, s, Reset)
 }
 
 func gray(s string) string {
-	return fmt.Sprintf("%s%s%s", Gray, s, Rtd)
+	return fmt.Sprintf("%s%s%s", Gray, s, Reset)
 }
 
 func purple(s string) string {
-	return fmt.Sprintf("%s%s%s", Purple, s, Rtd)
+	return fmt.Sprintf("%s%s%s", Purple, s, Reset)
 }
 
 func blue(s string) string {
-	return fmt.Sprintf("%s%s%s", Blue, s, Rtd)
+	return fmt.Sprintf("%s%s%s", Blue, s, Reset)
 }
 
 func yellow(s string) string {
-	return fmt.Sprintf("%s%s%s", Yellow, s, Rtd)
+	return fmt.Sprintf("%s%s%s", Yellow, s, Reset)
 }
 
 func green(s string) string {
-	return fmt.Sprintf("%s%s%s", Green, s, Rtd)
+	return fmt.Sprintf("%s%s%s", Green, s, Reset)
 }

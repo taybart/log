@@ -431,7 +431,7 @@ func Middleware(next http.HandlerFunc) http.HandlerFunc {
 			time.Since(start),
 			r.Method,
 			r.URL.Path,
-			Rtd)
+			Reset)
 		log(o)
 
 		for k, v := range rec.HeaderMap {
@@ -447,7 +447,7 @@ func getlabel(color, label string) string {
 		return ""
 	}
 	if useColors {
-		return color + label + Rtd
+		return color + label + Reset
 	}
 	return label
 }
