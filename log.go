@@ -85,7 +85,8 @@ const (
 	BlinkingRed    = ceBlinking + "31m"
 
 	// Return to default
-	Rtd = ce + "0m"
+	Rtd   = ce + "0m"
+	Reset = ce + "0m"
 )
 
 const (
