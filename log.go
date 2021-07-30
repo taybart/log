@@ -17,16 +17,14 @@ type Level int
 const (
 	// TRACE lowest = most verbose
 	TRACE Level = iota + 1
-	// VERBOSE level
-	VERBOSE
 	// DEBUG level
 	DEBUG
-	// INFO level
-	INFO
-	// HTTP level
-	HTTP
+	// VERBOSE level
+	VERBOSE
 	// TEST special level for testing
 	TEST
+	// INFO level
+	INFO
 	// WARN level
 	WARN
 	// ERROR level
@@ -408,11 +406,6 @@ func Fatalf(format string, v ...interface{}) {
 
 func Middleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if level > HTTP {
-			next(w, r)
-			return
-		}
-
 		rec := httptest.NewRecorder()
 		start := time.Now()
 		next(rec, r)
