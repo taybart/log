@@ -227,7 +227,7 @@ func Verbose(v ...interface{}) {
 
 // Verboseln : print var with no format
 func Verboseln(v ...interface{}) {
-	if level <= DEBUG {
+	if level <= VERBOSE {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		if plain {
