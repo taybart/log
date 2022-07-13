@@ -3,6 +3,7 @@ package log
 import (
 	"io"
 	"os"
+	"strings"
 )
 
 // Level type for level logging
@@ -51,8 +52,27 @@ var (
 )
 
 func init() {
-	if os.Getenv("NO_COLOR") != "" {
+	if os.Getenv("LOG_NO_COLOR") != "" {
 		useColors = false
+	}
+	lvl := os.Getenv("LOG_LEVEL")
+	switch strings.ToUpper(lvl) {
+	case "TRACE":
+		level = TRACE
+	case "DEBUG":
+		level = DEBUG
+	case "VERBOSE":
+		level = VERBOSE
+	case "TEST":
+		level = TEST
+	case "INFO":
+		level = INFO
+	case "WARN":
+		level = WARN
+	case "ERROR":
+		level = ERROR
+	case "FATAL":
+		level = FATAL
 	}
 }
 

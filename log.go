@@ -186,7 +186,7 @@ func Warn(v ...interface{}) {
 
 // Warnln : error var with no format
 func Warnln(v ...interface{}) {
-	if level <= ERROR {
+	if level <= WARN {
 		f := fmt.Sprintf("%v", v)
 		f = strings.Trim(f, "[]")
 		l := getlabel(Yellow, "[WARN]")
