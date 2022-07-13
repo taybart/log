@@ -130,3 +130,9 @@ func main() {
 	log.Info(buf.String())
 }
 ```
+
+### Control via ENV vars
+
+```bash
+NO_COLOR=true go run .
+```

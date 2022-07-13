@@ -50,6 +50,12 @@ var (
 	useColors = true
 )
 
+func init() {
+	if os.Getenv("NO_COLOR") != "" {
+		useColors = false
+	}
+}
+
 // UseColors : used to set colors
 func UseColors(use bool) {
 	useColors = use
