@@ -135,5 +135,6 @@ func main() {
 
 ```bash
 LOG_NO_COLOR=true go run .
+LOG_PLAIN=true go run .
 LOG_LEVEL=verbose go run .
 ```
