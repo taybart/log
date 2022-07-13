@@ -131,7 +131,7 @@ func main() {
 }
 ```
 
-### Control via ENV vars
+### Control via environment variables
 
 ```bash
 NO_COLOR=true go run .
