@@ -37,7 +37,7 @@ var (
 	level = INFO
 	// timeFmt : go format for the time in the logs
 	timeFmt = "2006-01-02 15:04:05"
-	// plain : don't add level and time to logs (false is essentially fmt.Print()
+	// plain : don't add level and time to logs (true is essentially fmt.Print() with levels)
 	plain = false
 	// noTime : don't add time to output, is not used if plain is set
 	noTime = false
@@ -73,6 +73,9 @@ func init() {
 		level = ERROR
 	case "FATAL":
 		level = FATAL
+	}
+	if os.Getenv("LOG_PLAIN") != "" {
+		plain = true
 	}
 }
 
