@@ -317,6 +317,6 @@ func createOutput(label, rest string, addnewline bool) string {
 func log(s string) {
 	_, err := Output.Write([]byte(s))
 	if err != nil {
-		fmt.Println("[LOG ERROR] Issue with log package", err)
+		fmt.Printf("%s[LOG ERROR] Issue with log package: %s%s\n", Red, err, Reset)
 	}
 }

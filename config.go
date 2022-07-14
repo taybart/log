@@ -99,6 +99,11 @@ func SetPlain() {
 	plain = true
 }
 
+// SetFancy : output, will print time and level
+func SetFancy() {
+	plain = false
+}
+
 // SetTimeOnly : output, will not print time or level
 func SetNoTime() {
 	noTime = true
