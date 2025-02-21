@@ -2,6 +2,7 @@ package log
 
 import (
 	"bytes"
+	"errors"
 	"io"
 	"os"
 
@@ -31,10 +32,46 @@ func TestWarn(t *testing.T) {
 func TestError(t *testing.T) {
 	toutput(t, ERROR, "\033[31m[ERROR]\033[0m")
 }
+func TestFatal(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("logger did not die")
+		}
+	}()
+	toutput(t, FATAL, "\033[31m[FATAL]\033[0m")
+}
 
-// func TestFatal(t *testing.T) {
-// toutput(t, FATAL, "\033[31m[FATAL]\033[0m")
-// }
+func TestFileOutput(t *testing.T) {
+	testlog := "./test.txt"
+	// cleanup
+	defer func() {
+		if err := os.Remove(testlog); err != nil {
+			t.Errorf("could not remove test file: %s", err)
+		}
+	}()
+
+	if err := os.Remove(testlog); err != nil {
+		if !errors.Is(err, os.ErrNotExist) {
+			t.Error(err)
+		}
+	}
+	// prep logger
+	SetOutput(testlog)
+	SetPlain()
+	SetLevel(INFO) // level must be set because other tests set it
+
+	// test
+	Infof("test")
+
+	// check contents
+	b, err := os.ReadFile(testlog)
+	if err != nil {
+		t.Error(err)
+	}
+	if string(b) != "test" {
+		t.Errorf("expected file to contain log contents, got: %s", b)
+	}
+}
 
 func toutput(t *testing.T, level Level, label string) {
 	stdo := os.Stdout
@@ -65,8 +102,8 @@ func toutput(t *testing.T, level Level, label string) {
 		Warnln("test")
 	case ERROR:
 		Errorln("test")
-		// case FATAL:
-		// Fatalln("test")
+	case FATAL:
+		Fatalln("test")
 	}
 	err := w.Close()
 	if err != nil {

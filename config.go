@@ -121,10 +121,10 @@ func SetOutputWriter(w io.Writer) {
 
 // SetOutput : set log output to a specific file, default is stdout
 func SetOutput(filename string) error {
-	logfile, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	fd, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
-	Output = logfile
+	Output = fd
 	return nil
 }

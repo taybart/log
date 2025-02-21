@@ -242,7 +242,7 @@ func Fatalln(v ...interface{}) {
 		_, file, line, _ := runtime.Caller(2)
 		f = fmt.Sprintf("%v: %v\n", file, line)
 		log(createOutput(l, f, addnewline))
-		os.Exit(1)
+		panic(f)
 	}
 }
 
@@ -282,7 +282,7 @@ func Middleware(next http.HandlerFunc) http.HandlerFunc {
 			Reset)
 		log(o)
 
-		for k, v := range rec.HeaderMap {
+		for k, v := range rec.Result().Header {
 			w.Header()[k] = v
 		}
 		w.WriteHeader(rec.Code)
