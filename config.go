@@ -128,3 +128,14 @@ func SetOutput(filename string) error {
 	Output = fd
 	return nil
 }
+
+// Close : finish with output
+func Close() error {
+	switch t := Output.(type) {
+	case *os.File:
+		if err := t.Close(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
