@@ -1,5 +1,10 @@
 package log
 
+import (
+	"fmt"
+	"strings"
+)
+
 // Colors
 const (
 	// Color escape
@@ -57,3 +62,16 @@ const (
 	Rtd   = ce + "0m"
 	Reset = ce + "0m"
 )
+
+// Color
+func Colorf(color, format string, v ...interface{}) {
+	f := fmt.Sprintf(format, v...)
+	o := fmt.Sprintf("%v%v%v", color, f, Reset)
+	log(o)
+}
+func Color(color string, v ...interface{}) {
+	f := fmt.Sprintf("%v", v...)
+	f = strings.Trim(f, "[]")
+	o := fmt.Sprintf("%v%v%v\n", color, f, Reset)
+	log(o)
+}

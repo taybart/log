@@ -104,7 +104,7 @@ func SetFancy() {
 	plain = false
 }
 
-// SetTimeOnly : output, will not print time or level
+// SetNoTime : output, will not print time or level
 func SetNoTime() {
 	noTime = true
 }
