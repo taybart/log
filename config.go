@@ -26,6 +26,8 @@ const (
 	ERROR
 	// FATAL level
 	FATAL
+	// NONE level
+	NONE
 )
 
 const (
@@ -73,6 +75,8 @@ func init() {
 		level = ERROR
 	case "FATAL":
 		level = FATAL
+	case "NONE":
+		level = NONE
 	}
 	if os.Getenv("LOG_PLAIN") != "" {
 		plain = true
