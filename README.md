@@ -5,14 +5,17 @@
 Simple level logging
 
 ### Levels
+
 Levels can be:
-1)	TRACE
-1)	VERBOSE
-1)	DEBUG
-1)	INFO
-1)	WARN
-1)	ERROR
-1)	FATAL
+
+1. TRACE
+1. VERBOSE
+1. DEBUG
+1. INFO
+1. WARN
+1. ERROR
+1. FATAL
+1. NONE
 
 ### Usage
 
