@@ -235,14 +235,12 @@ func Fatal(v ...interface{}) {
 // Fatalln : error var with no format
 func Fatalln(v ...interface{}) {
 	if level <= FATAL {
-		f := fmt.Sprintf("%v", v)
-		f = strings.Trim(f, "[]")
+		f := strings.Trim(fmt.Sprintf("%v", v), "[]")
+		_, file, line, _ := runtime.Caller(2)
+		f = fmt.Sprintf("%s\n%v: %v", f, file, line)
 		l := getlabel(Red, "[FATAL]")
 		log(createOutput(l, f, addnewline))
-		_, file, line, _ := runtime.Caller(2)
-		f = fmt.Sprintf("%v: %v\n", file, line)
-		log(createOutput(l, f, addnewline))
-		panic(f)
+		os.Exit(1)
 	}
 }
 
@@ -250,10 +248,9 @@ func Fatalln(v ...interface{}) {
 func Fatalf(format string, v ...interface{}) {
 	if level <= FATAL {
 		f := fmt.Sprintf(format, v...)
-		l := getlabel(Red, "[FATAL]")
-		log(createOutput(l, f, addnewline))
 		_, file, line, _ := runtime.Caller(2)
-		f = fmt.Sprintf("%v: %v\n", file, line)
+		f = fmt.Sprintf("%s\n%v: %v", f, file, line)
+		l := getlabel(Red, "[FATAL]")
 		log(createOutput(l, f, addnewline))
 		os.Exit(1)
 	}
