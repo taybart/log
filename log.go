@@ -1,9 +1,10 @@
 package log
 
 import (
+	"bufio"
 	"fmt"
+	"net"
 	"net/http"
-	"net/http/httptest"
 	"os"
 	"runtime"
 	"strings"
@@ -256,12 +257,73 @@ func Fatalf(format string, v ...interface{}) {
 	}
 }
 
+// statusWriter wraps an http.ResponseWriter, recording the status code while
+// passing everything straight through to the underlying writer.
+type statusWriter struct {
+	http.ResponseWriter
+	status   int
+	hijacked bool
+}
+
+func (w *statusWriter) WriteHeader(code int) {
+	if w.status == 0 {
+		w.status = code
+	}
+	w.ResponseWriter.WriteHeader(code)
+}
+
+func (w *statusWriter) Write(b []byte) (int, error) {
+	if w.status == 0 {
+		w.status = http.StatusOK
+	}
+	return w.ResponseWriter.Write(b)
+}
+
+// Flush implements http.Flusher for code that type-asserts directly.
+func (w *statusWriter) Flush() {
+	if f, ok := w.ResponseWriter.(http.Flusher); ok {
+		if w.status == 0 {
+			w.status = http.StatusOK
+		}
+		f.Flush()
+	}
+}
+
+// Hijack implements http.Hijacker so connection upgrades (websockets) work.
+func (w *statusWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	h, ok := w.ResponseWriter.(http.Hijacker)
+	if !ok {
+		return nil, nil, fmt.Errorf("log: underlying ResponseWriter does not implement http.Hijacker")
+	}
+	conn, rw, err := h.Hijack()
+	if err == nil {
+		w.hijacked = true
+	}
+	return conn, rw, err
+}
+
+// Unwrap lets http.ResponseController reach the real writer
+// (Flush, Hijack, SetReadDeadline, SetWriteDeadline, ...).
+func (w *statusWriter) Unwrap() http.ResponseWriter { return w.ResponseWriter }
+
+// Middleware logs each request's status, remote address, duration, method and path.
+// The response is passed through unbuffered, so streaming and upgrades work.
 func Middleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		rec := httptest.NewRecorder()
 		start := time.Now()
-		next(rec, r)
-		statusCode := rec.Result().StatusCode
+		sw := &statusWriter{ResponseWriter: w}
+		next(sw, r)
+
+		statusCode := sw.status
+		if statusCode == 0 {
+			// nothing written, or the connection was hijacked (e.g. via
+			// http.ResponseController, which bypasses our Hijack method)
+			if sw.hijacked || r.Header.Get("Upgrade") != "" {
+				statusCode = http.StatusSwitchingProtocols
+			} else {
+				statusCode = http.StatusOK
+			}
+		}
 		codeLabel := fmt.Sprintf("[%d]", statusCode)
 		l := getlabel(Blue, codeLabel)
 		if statusCode >= 400 {
@@ -278,12 +340,6 @@ func Middleware(next http.HandlerFunc) http.HandlerFunc {
 			r.URL.Path,
 			Reset)
 		log(o)
-
-		for k, v := range rec.Result().Header {
-			w.Header()[k] = v
-		}
-		w.WriteHeader(rec.Code)
-		rec.Body.WriteTo(w)
 	}
 }
 
