@@ -13,14 +13,13 @@ import (
 
 // Print :  print var with no format
 func Print(v ...interface{}) {
-	Traceln(v)
+	Traceln(v...)
 }
 
 // Println : print var with no format
 func Println(v ...interface{}) {
 	if level <= DEBUG {
-		f := fmt.Sprintf("%v", v)
-		f = strings.Trim(f, "[]")
+		f := join(v)
 		if plain {
 			log(fmt.Sprintf("%s\n", f))
 			return
@@ -44,14 +43,13 @@ func Printf(format string, v ...interface{}) {
 
 // Trace : print var with no format
 func Trace(v ...interface{}) {
-	Traceln(v)
+	Traceln(v...)
 }
 
 // Traceln : print var with no format
 func Traceln(v ...interface{}) {
 	if level <= DEBUG {
-		f := fmt.Sprintf("%v", v)
-		f = strings.Trim(f, "[]")
+		f := join(v)
 		if plain {
 			log(fmt.Sprintf("%s\n", f))
 			return
@@ -78,14 +76,13 @@ func Tracef(format string, v ...interface{}) {
 
 // Verbose : print var with no format
 func Verbose(v ...interface{}) {
-	Verboseln(v)
+	Verboseln(v...)
 }
 
 // Verboseln : print var with no format
 func Verboseln(v ...interface{}) {
 	if level <= VERBOSE {
-		f := fmt.Sprintf("%v", v)
-		f = strings.Trim(f, "[]")
+		f := join(v)
 		if plain {
 			log(fmt.Sprintf("%s\n", f))
 			return
@@ -110,14 +107,13 @@ func Verbosef(format string, v ...interface{}) {
 
 // Debug : print var with no format
 func Debug(v ...interface{}) {
-	Debugln(v)
+	Debugln(v...)
 }
 
 // Debugln : print var with no format
 func Debugln(v ...interface{}) {
 	if level <= DEBUG {
-		f := fmt.Sprintf("%v", v)
-		f = strings.Trim(f, "[]")
+		f := join(v)
 		l := getlabel(Blue, "[DEBUG]")
 		log(createOutput(l, f, addnewline))
 	}
@@ -134,14 +130,13 @@ func Debugf(format string, v ...interface{}) {
 
 // Info : info with no format
 func Info(v ...interface{}) {
-	Infoln(v)
+	Infoln(v...)
 }
 
 // Infoln : info with no format
 func Infoln(v ...interface{}) {
 	if level <= INFO {
-		f := fmt.Sprintf("%v", v)
-		f = strings.Trim(f, "[]")
+		f := join(v)
 		l := getlabel(Green, "[INFO]")
 		log(createOutput(l, f, addnewline))
 	}
@@ -158,14 +153,13 @@ func Infof(format string, v ...interface{}) {
 
 // Test : test with no format
 func Test(v ...interface{}) {
-	Testln(v)
+	Testln(v...)
 }
 
 // Testln : test with no format
 func Testln(v ...interface{}) {
 	if level <= TEST {
-		f := fmt.Sprintf("%v", v)
-		f = strings.Trim(f, "[]")
+		f := join(v)
 		l := getlabel(Green, "[TEST]")
 		log(createOutput(l, f, addnewline))
 	}
@@ -182,14 +176,13 @@ func Testf(format string, v ...interface{}) {
 
 // Warn : error var with no format
 func Warn(v ...interface{}) {
-	Warnln(v)
+	Warnln(v...)
 }
 
 // Warnln : error var with no format
 func Warnln(v ...interface{}) {
 	if level <= WARN {
-		f := fmt.Sprintf("%v", v)
-		f = strings.Trim(f, "[]")
+		f := join(v)
 		l := getlabel(Yellow, "[WARN]")
 		log(createOutput(l, f, addnewline))
 	}
@@ -206,14 +199,13 @@ func Warnf(format string, v ...interface{}) {
 
 // Error : error var with no format
 func Error(v ...interface{}) {
-	Errorln(v)
+	Errorln(v...)
 }
 
 // Errorln : error var with no format
 func Errorln(v ...interface{}) {
 	if level <= ERROR {
-		f := fmt.Sprintf("%v", v)
-		f = strings.Trim(f, "[]")
+		f := join(v)
 		l := getlabel(Red, "[ERROR]")
 		log(createOutput(l, f, addnewline))
 	}
@@ -230,13 +222,13 @@ func Errorf(format string, v ...interface{}) {
 
 // Fatal : error var with no format
 func Fatal(v ...interface{}) {
-	Fatalln(v)
+	Fatalln(v...)
 }
 
 // Fatalln : error var with no format
 func Fatalln(v ...interface{}) {
 	if level <= FATAL {
-		f := strings.Trim(fmt.Sprintf("%v", v), "[]")
+		f := join(v)
 		_, file, line, _ := runtime.Caller(2)
 		f = fmt.Sprintf("%s\n%v: %v", f, file, line)
 		l := getlabel(Red, "[FATAL]")
@@ -372,4 +364,9 @@ func log(s string) {
 	if err != nil {
 		fmt.Printf("%s[LOG ERROR] Issue with log package: %s%s\n", Red, err, Reset)
 	}
+}
+
+// join formats v like fmt.Println does, without the newline
+func join(v []interface{}) string {
+	return strings.TrimSuffix(fmt.Sprintln(v...), "\n")
 }

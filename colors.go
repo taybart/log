@@ -2,7 +2,6 @@ package log
 
 import (
 	"fmt"
-	"strings"
 )
 
 // Colors
@@ -70,8 +69,7 @@ func Colorf(color, format string, v ...interface{}) {
 	log(o)
 }
 func Color(color string, v ...interface{}) {
-	f := fmt.Sprintf("%v", v...)
-	f = strings.Trim(f, "[]")
+	f := join(v)
 	o := fmt.Sprintf("%v%v%v\n", color, f, Reset)
 	log(o)
 }

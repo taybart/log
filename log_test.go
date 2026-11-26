@@ -127,3 +127,24 @@ func TestFileOutput(t *testing.T) {
 		t.Errorf("expected file to contain log contents, got: %s", b)
 	}
 }
+
+// brackets in the message are kept, and Error(...) formats like Errorln(...)
+func TestKeepsBrackets(t *testing.T) {
+	var buf bytes.Buffer
+	SetOutputWriter(&buf)
+	defer SetOutputWriter(os.Stdout)
+	SetLevel(ERROR)
+	UseColors(false)
+	defer UseColors(true)
+	SetNoTime()
+
+	Error(errors.New("usage: x [a|b] <c> [count]"))
+	Errorln("[start]", 3, "end]")
+	Color(Red, "[x]")
+	want := "[ERROR] usage: x [a|b] <c> [count]\n" +
+		"[ERROR] [start] 3 end]\n" +
+		Red + "[x]" + Reset + "\n"
+	if got := buf.String(); got != want {
+		t.Fatalf("expected:\n%q\ngot:\n%q", want, got)
+	}
+}
